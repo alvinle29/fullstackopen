@@ -7,10 +7,20 @@ const Button = (props) => (
 )
 
 const StatisticLine = ({ text, value }) => {
-  if (text === 'positive') {
-    return (<p>{text} {value} %</p>)
-  }
-  else return (<p>{text} {value} </p>)
+  if (text === 'positive')
+    return (
+      <tr>
+        <td>{text}</td>
+        <td>{value} %</td>
+      </tr>
+    )
+
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
 }
 
 const Statistics = ({ good, neutral, bad }) => {
