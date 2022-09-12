@@ -1,7 +1,16 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+
+morgan.token('body', (request, _response) => {
+  return request.method === 'POST'
+    ? JSON.stringify(request.body)
+    : ''
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body')
+)
 
 let persons = [
   {
@@ -50,12 +59,22 @@ app.get('/api/persons', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-  console.log(request.headers)
-  console.log(body)
 
-  if (!body.name) {
+  if (!body.name || !body.number) {
     return response.status(400).json({
-      error: 'name missing'
+      error: 'name and/or number missing'
+    })
+  }
+
+  const exists = persons.find(person => 
+    person.name.toUpperCase().includes(
+      body.name.toUpperCase()
+    )
+  )
+
+  if (exists) {
+    return response.status(400).json({
+      error: 'name must be unique'
     })
   }
 
