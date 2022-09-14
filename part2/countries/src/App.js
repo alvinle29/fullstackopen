@@ -22,12 +22,13 @@ const App = () => {
   useEffect(() => {
     if (country) {
       const capital = country.capital
-      const api_key = process.env.REACT_APP_API_KEY
-      const url = `http://api.weatherstack.com/current?access_key=${api_key}&query=${capital}`
+      const api_key = process.env.REACT_APP_API_KEY || '861c1edd0efc550a9e57ef8be7faf8f6'
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${api_key}`
       axios
         .get(url)
         .then(response => {
           setWeather(response.data)
+          console.log(response.data)
         })
     }
   }, [country])
