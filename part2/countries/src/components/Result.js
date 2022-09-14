@@ -1,24 +1,24 @@
 import React from 'react'
 // import Country from '../components/Country'
 
-const Results = ({ filter, results, handleShowClick }) => {
-  if (filter === '' || results.length === 1) return null
+const Result = ({ filter, result, handleShowButton }) => {
+  if (filter === '' || result.length === 1) return null
   
-  if (results.length > 10) {
+  if (result.length > 10) {
     return (
       <div>
         Too many matches, specify another filter
       </div>
     )
   }
-  else if (results.length > 1) {
+  else if (result.length > 1) {
     return (
       <>
-        {results.map(country => 
+        {result.map(country => 
           <div key={country.alpha3Code}>
             {`${country.name} `}
             <button 
-              onClick={handleShowClick(country)}>
+              onClick={handleShowButton(country)}>
                 show
             </button>
           </div>
@@ -29,4 +29,4 @@ const Results = ({ filter, results, handleShowClick }) => {
   else return <div>No matches found</div>
 }
 
-export default Results
+export default Result
