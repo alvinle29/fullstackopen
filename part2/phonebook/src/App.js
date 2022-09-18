@@ -21,13 +21,29 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
-    if (persons
-      .map(person => person.name)
-      .includes(newName)
-    ) {
-      return window.alert(
+    const person = persons.find(p =>
+      p.name.toUpperCase() === newName.toUpperCase())
+
+    if (person) {
+      /*return window.alert(
         `${newName} is already added to phonebook`
-      )
+      )*/
+
+      const confirmUpdate = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+
+      if (!confirmUpdate) return
+
+      const PersonToBeUpdate = {
+        ...person,
+        number: newNumber
+      }
+
+      return personService
+        .update(person.id, PersonToBeUpdate)
+        .then(updatedPerson => {
+          setPersons(persons.map(p =>
+            p.id === person.id ? updatedPerson : p))
+        })
     }
 
     const personObject = {
