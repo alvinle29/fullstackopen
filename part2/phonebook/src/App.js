@@ -45,6 +45,25 @@ const App = () => {
       })
       )
   }
+
+  const removePerson = (id) => {
+    const personToRemove = persons.find(p => p.id === id)
+
+    const confirmRemove = window.confirm(`Delete ${personToRemove.name}?`)
+
+    if (confirmRemove) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id))
+        })
+        .catch(error => {
+          alert(`${personToRemove.name} already deleted`)
+          setPersons(persons.filter(p => p.id !== id))
+        })
+    }
+  }
+
   const handleFilterChange = (event) => {
     setFilter(event.target.value)
   }
@@ -81,7 +100,9 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons
+        persons={personsToShow}
+        removePerson={removePerson} />
     </div>
   )
 }
