@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -28,18 +29,15 @@ app.get('/', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-  response.send(`
-    <p>Phonebook has info for ${persons.length} people<p>
-    <p>${new Date()}<p>
-  `)
+  Person
+    .countDocuments({})
+    .then(count => {
+      response.send(`
+        <p>Phonebook has info for ${count} people<p>
+        <p>${new Date()}<p>
+      `)
+    })
 })
-
-const generateId = () => {
-  const maxId = persons.length > 0
-    ? Math.max(...persons.map(n => n.id))
-    : 0
-  return maxId + 1
-}
 
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
@@ -56,44 +54,25 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  const exists = persons.find(person => 
-    person.name.toUpperCase().includes(
-      body.name.toUpperCase()
-    )
-  )
-
-  if (exists) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    })
-  }
-
-  const person = {
+  const person = new Person({
     name: body.name,
     number: body.number,
-    id: generateId(),
-  }
+  })
 
-  persons = persons.concat(person)
-
-  response.json(person)
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-
-  if (person) {
+  Person.findById(request.params.id).then(person => {
     response.json(person)
-  } else {
-    response.status(404).send('Invalid id!')
-  }
+  })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-
-  response.status(204).end()
+  Person.findByIdAndRemove(request.params.id).then(person => {
+    response.json(person)
+  })
 })
 
