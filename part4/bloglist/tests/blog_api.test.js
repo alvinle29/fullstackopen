@@ -30,6 +30,15 @@ test('all blogs are returned', async () => {
   expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
+describe('check id', () => {
+  test('is ID written in `id` field insted of `_id`', async () => {
+    const response = await api
+      .get('/api/blogs')
+    
+    expect(response.body[0].id).toBeDefined()
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
