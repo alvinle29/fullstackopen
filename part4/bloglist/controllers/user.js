@@ -6,6 +6,12 @@ const User = require('../models/user')
 userRouter.post('/', async (request, response) => {
   const { username, name, password } = request.body
 
+  if (password === undefined || password.length < 3) {
+    return response
+      .status(400)
+      .send({ error: 'password is too short or missing' })
+  }
+
   const existingUser = await User.findOne({ username })
   if (existingUser) {
     return response.status(400).json({
@@ -13,22 +19,30 @@ userRouter.post('/', async (request, response) => {
     })
   }
 
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  try {
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
 
-  const user = new User({
-    username,
-    name,
-    passwordHash,
-  })
+    const user = new User({
+      username,
+      name,
+      passwordHash,
+    })
 
-  const savedUser = await user.save()
+    const savedUser = await user.save()
 
-  response.status(201).json(savedUser)
+    response.status(201).json(savedUser)
+  } catch (error) {
+    response
+      .status(400)
+      .send({error: 'username is too short'})
+  }
 })
 
 userRouter.get('/', async (request, response) => {
-  const users = await User.find({})
+  const users = await User
+    .find({})
+    .populate('blogs')
   response.json(users)
 })
 
