@@ -39,6 +39,26 @@ describe('check id', () => {
   })
 })
 
+describe('new blog added', () => {
+  test('a new blog is added', async () => {
+    const newBlog = {
+      title: 'abcdefg',
+      author: 'Robert Sydney Jr.',
+      url: 'https://www.youtube.com/results?search_query=mc+mu',
+      likes: 3
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogToCheck = await helper.blogsInDb()
+    expect(blogToCheck).toHaveLength(helper.initialBlogs.length + 1)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
