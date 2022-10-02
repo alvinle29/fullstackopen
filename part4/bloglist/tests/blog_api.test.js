@@ -75,6 +75,20 @@ describe('new blog added', () => {
 
     expect(response.body.likes).toBe(0)
   })
+
+  test('fails with status code 400 if missing data', async () => {
+    const newBlog = {
+      author: 'Bob Smith'
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
 })
 
 
