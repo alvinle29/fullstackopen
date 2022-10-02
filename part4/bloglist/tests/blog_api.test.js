@@ -59,6 +59,25 @@ describe('new blog added', () => {
   })
 })
 
+describe('new blog added', () => {
+  test('a new blog is added', async () => {
+    const newBlog = {
+      title: 'abcdefg',
+      author: 'Robert Sydney Jr.',
+      url: 'https://www.youtube.com/results?search_query=mc+mu',
+    }
+
+    const response = await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    expect(response.body.likes).toBe(0)
+  })
+})
+
+
 afterAll(() => {
   mongoose.connection.close()
 })
