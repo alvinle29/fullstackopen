@@ -13,6 +13,7 @@ const App = () => {
   const [url, setUrl] = useState('')
   const [notification, setNotification] = useState(null)
   const [user, setUser] = useState(null)
+  const [loginVisible, setLoginVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -45,7 +46,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      
+
       setNotification({
         text: 'login successfully',
         type: 'notifcation',
@@ -130,38 +131,47 @@ const App = () => {
   )
 
   const postForm = () => {
+    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+    const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
     return (
       <div>
-        <form onSubmit={handleAddingBlog}>
-          <div>
-            Title:
-            <input
-              type='text'
-              value={newBlog}
-              name='Title:'
-              onChange={({ target }) => setNewBlog(target.value)} 
-            />
-          </div>
-          <div>
-            Author:
-            <input
-              type='text'
-              value={author}
-              name="Author:"
-              onChange={({ target }) => setAuthor(target.value)} 
-            />
-          </div>
-          <div>
-            Url:
-            <input
-              type='text'
-              value={url}
-              name="Url:"
-              onChange={({ target }) => setUrl(target.value)} 
-            />
-          </div>
-          <button type='submit'>create</button>
-        </form>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>create new blog</button>
+        </div>
+        <div style={showWhenVisible}>
+          <form onSubmit={handleAddingBlog}>
+            <div>
+              Title:
+              <input
+                type='text'
+                value={newBlog}
+                name='Title:'
+                onChange={({ target }) => setNewBlog(target.value)}
+              />
+            </div>
+            <div>
+              Author:
+              <input
+                type='text'
+                value={author}
+                name="Author:"
+                onChange={({ target }) => setAuthor(target.value)}
+              />
+            </div>
+            <div>
+              Url:
+              <input
+                type='text'
+                value={url}
+                name="Url:"
+                onChange={({ target }) => setUrl(target.value)}
+              />
+            </div>
+            <button type='submit'>create</button>
+          </form>
+        </div>
+        <button onClick={() => setLoginVisible(false)}>cancel</button>
       </div>
     )
   }
