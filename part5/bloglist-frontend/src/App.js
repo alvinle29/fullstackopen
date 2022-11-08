@@ -8,6 +8,9 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [newBlog, setNewBlog] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
 
@@ -55,6 +58,25 @@ const App = () => {
     setUser(null)
   }
 
+  const handleAddingBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newBlog,
+      author: author,
+      url: url,
+      user: user.name,
+    }
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewBlog('')
+        setAuthor('')
+        setUrl('')
+      })
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -88,6 +110,43 @@ const App = () => {
     </div>
   )
 
+  const postForm = () => {
+    return (
+      <div>
+        <form onSubmit={handleAddingBlog}>
+          <div>
+            Title:
+            <input
+              type='text'
+              value={newBlog}
+              name='Title:'
+              onChange={({ target }) => setNewBlog(target.value)} 
+            />
+          </div>
+          <div>
+            Author:
+            <input
+              type='text'
+              value={author}
+              name="Author:"
+              onChange={({ target }) => setAuthor(target.value)} 
+            />
+          </div>
+          <div>
+            Url:
+            <input
+              type='text'
+              value={url}
+              name="Url:"
+              onChange={({ target }) => setUrl(target.value)} 
+            />
+          </div>
+          <button type='submit'>create</button>
+        </form>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Notification message={errorMessage} />
@@ -99,6 +158,7 @@ const App = () => {
         <div>
           <h1>blogs</h1>
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
+          {postForm()}
           {blogForm()}
         </div>
       }
