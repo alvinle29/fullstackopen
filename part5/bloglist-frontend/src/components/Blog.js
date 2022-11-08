@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const blogStyle = {
@@ -12,7 +13,7 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const [isVisible, setVisible] = useState(false)
 
   const deleteButton = () => {   
-    if (blog.user.username === user) {
+    if (blog.user?.username === user) {
       return (
         <button onClick={() => handleDelete()}>delete</button>
       )
@@ -46,6 +47,13 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
       </div>
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired, 
+  handleLike: PropTypes.func.isRequired, 
+  handleDelete: PropTypes.func.isRequired, 
+  user: PropTypes.string.isRequired
 }
 
 export default Blog
