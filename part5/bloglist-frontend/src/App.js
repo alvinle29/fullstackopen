@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Blog from './components/Blog'
-import Togglable from "./components/Togglable"
-import PostForm from "./components/PostForm"
+import Togglable from './components/Togglable'
+import PostForm from './components/PostForm'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -154,7 +154,7 @@ const App = () => {
             blog={blog}
             handleLike={() => handleLike(blog)}
             handleDelete={() => handleDelete(blog)}
-            user={user?.username}
+            user={user.username}
           />
         )}
     </div>

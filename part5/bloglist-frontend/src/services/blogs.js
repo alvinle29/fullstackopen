@@ -27,15 +27,15 @@ const like = async blog => {
   }
 
   const response = await axios.put(
-    `${baseUrl}/${blog.id}`, 
-    { ...blog, likes: blog.likes + 1 }, 
+    `${baseUrl}/${blog.id}`,
+    { ...blog, likes: blog.likes + 1 },
     config
   )
   return response.data
 }
 
 const deleteBlog = async blog => {
-  const config =  {
+  const config = {
     headers: { Authorization: token }
   }
 

@@ -12,8 +12,8 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
 
   const [isVisible, setVisible] = useState(false)
 
-  const deleteButton = () => {   
-    if (blog.user?.username === user) {
+  const deleteButton = () => {
+    if (blog.user.username === user) {
       return (
         <button onClick={() => handleDelete()}>delete</button>
       )
@@ -50,9 +50,9 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
 }
 
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired, 
-  handleLike: PropTypes.func.isRequired, 
-  handleDelete: PropTypes.func.isRequired, 
+  blog: PropTypes.object.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   user: PropTypes.string.isRequired
 }
 
