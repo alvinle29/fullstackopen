@@ -11,7 +11,7 @@ const App = () => {
   const [newBlog, setNewBlog] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -45,10 +45,22 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      
+      setNotification({
+        text: 'login successfully',
+        type: 'notifcation',
+      })
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification(null)
+      }, 5000)
+
+    } catch (exception) {
+      setNotification({
+        text: 'wrong credentials',
+        type: 'error',
+      })
+      setTimeout(() => {
+        setNotification(null)
       }, 5000)
     }
   }
@@ -74,6 +86,13 @@ const App = () => {
         setNewBlog('')
         setAuthor('')
         setUrl('')
+        setNotification({
+          text: `${blogObject.title} by ${blogObject.author} added`,
+          type: 'notification'
+        })
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
       })
   }
 
@@ -149,14 +168,15 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage} />
       {user === null ?
         <div>
           <h1>Log in to application</h1>
+          <Notification message={notification} />
           {loginForm()}
         </div> :
         <div>
           <h1>blogs</h1>
+          <Notification message={notification} />
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
           {postForm()}
           {blogForm()}
