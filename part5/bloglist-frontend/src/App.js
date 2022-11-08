@@ -111,6 +111,15 @@ const App = () => {
     )
   }
 
+  const handleDelete = async (blog) => {
+    if (window.confirm(`Remove ${blog.title} by ${blog.author}?`)) {
+      await blogService.deleteBlog(blog)
+      setBlogs(
+        blogs.filter(currentBlog => currentBlog.id !== blog.id)
+      )
+    }
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -144,6 +153,8 @@ const App = () => {
             key={blog.id}
             blog={blog}
             handleLike={() => handleLike(blog)}
+            handleDelete={() => handleDelete(blog)}
+            user={user?.username}
           />
         )}
     </div>
