@@ -32,7 +32,7 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='Blog'>
       <div>
         {blog.title} {blog.author} <button onClick={() => setVisible(false)}>hide</button>
       </div>
