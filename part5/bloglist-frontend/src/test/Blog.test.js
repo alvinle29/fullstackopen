@@ -72,3 +72,35 @@ test('Test which checks that the blog\'s url and number of likes are shown when 
     5
   )
 })
+
+test('Test which ensures that if the like button is clicked twice.', () => {
+  const blog = {
+    title: 'Blog title',
+    author: 'Blog Author',
+    url: 'abcxyz.com',
+    user: 'Stewart Dunky',
+    likes: 5
+  }
+  const mockHandler = jest.fn()
+
+  const user = 'Stewart'
+  const handleDelete = () => null
+
+  const component = render(
+    <Blog
+      blog={blog}
+      user={user}
+      handleDelete={handleDelete}
+      handleLike={mockHandler}
+    />
+  )
+
+  const viewButton = component.getByText('view')
+  fireEvent.click(viewButton)
+
+  const likeButton = component.getByRole('button', { name: 'like' })
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})
