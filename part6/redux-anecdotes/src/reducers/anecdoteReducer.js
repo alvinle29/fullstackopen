@@ -17,6 +17,13 @@ const asObject = (anecdote) => {
   }
 }
 
+export const voteAnecdote = (id) => {
+  return {
+    type: 'VOTE',
+    data: { id }
+  }
+}
+
 export const createAnecdote = (content) => {
   return {
     type: 'ANECDOTE',
@@ -47,7 +54,7 @@ const reducer = (state = initialState, action) => {
         votes: votedAnecdote.votes + 1
       }
       return state.map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote)
-      .sort((a, b) => b.votes - a.votes)
+        .sort((a, b) => b.votes - a.votes)
     }
     default:
       return state
