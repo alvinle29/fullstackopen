@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+
 import Filter from './components/Filter'
 import Result from './components/Result'
 import Country from './components/Country'
@@ -22,8 +23,8 @@ const App = () => {
   useEffect(() => {
     if (country) {
       const capital = country.capital
-      const api_key = process.env.REACT_APP_API_KEY || '861c1edd0efc550a9e57ef8be7faf8f6'
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${api_key}`
+      const API_KEY = process.env.REACT_APP_API_KEY || '861c1edd0efc550a9e57ef8be7faf8f6'
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${API_KEY}`
       axios
         .get(url)
         .then(response => {
