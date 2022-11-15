@@ -57,7 +57,7 @@ describe('most blogs by author', () => {
     }
   ]
 
-  test('the popular author and the number of his blogs', () => {
+  test('the most popular author and the number of his blogs', () => {
     const result = listHelper.mostBlogs(blogs)
     expect(result).toEqual(popular)
   })

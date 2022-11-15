@@ -44,7 +44,7 @@ describe('most likes by author', () => {
       title: 'TDD harms architecture',
       author: 'Robert C. Martin',
       url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
-      likes: 0,
+      likes: 9,
       __v: 0
     },
     {
@@ -57,7 +57,7 @@ describe('most likes by author', () => {
     }
   ]
 
-  test('the most likes author received', () => {
+  test('the most likes an author received', () => {
     const result = listHelper.mostLikes(blogs)
     expect(result).toEqual(likes)
   })

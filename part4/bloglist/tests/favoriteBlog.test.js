@@ -37,7 +37,7 @@ describe('favorite blog', () => {
       title: 'First class tests',
       author: 'Robert C. Martin',
       url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
-      likes: 10,
+      likes: 15,
       __v: 0
     },
     {
@@ -58,7 +58,7 @@ describe('favorite blog', () => {
     }
   ]
 
-  test('when list has more then one blog and at least one blog has likes more then 0 (zero)', () => {
+  test('when list has more than one blog and at least one blog has likes > 0', () => {
     const result = listHelper.favoriteBlog(blogs)
     expect(result).toEqual(favorite)
   })

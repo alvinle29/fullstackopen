@@ -91,8 +91,8 @@ describe('new blog added', () => {
   })
 })
 
-describe('deletion of a blog', () => {
-  test('succeeds with status code 204 if id is valid', async () => {
+describe('delete of a blog', () => {
+  test('succeed with status code 204 if id is valid', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
 
@@ -106,8 +106,8 @@ describe('deletion of a blog', () => {
   })
 })
 
-describe('updating a blog', () => {
-  test('succeeds with status code 200 if id is valid', async () => {
+describe('update a blog', () => {
+  test('succeed with status code 200 if id is valid', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToUpdate = blogsAtStart[0]
 
@@ -125,24 +125,6 @@ describe('updating a blog', () => {
 })
 
 describe('adding users:', () => {
-  /*test('creating a new user', async () => {
-    const usersAtStart = await helper.usersInDb()
-    const newUser = {
-      username: 'alvinle29',
-      name: 'Bach',
-      password: 'password'
-    }
-    await api
-      .post('/api/users')
-      .send(newUser)
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
-
-    const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
-    const usernames = usersAtEnd.map(user => user.username)
-    expect(usernames).toContain(newUser.username)
-  })*/
 
   test('creating an invalid user (short username)', async () => {
     const usersAtStart = await helper.usersInDb()
@@ -206,8 +188,6 @@ describe('adding users:', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
 
-    // expect(result.body.error).toContain('password is too short')
-
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
 
@@ -228,8 +208,6 @@ describe('adding users:', () => {
       .send(newUser)
       .expect(400)
       .expect('Content-Type', /application\/json/)
-
-    // expect(result.body.error).toContain('password is too short or missing')
 
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length)

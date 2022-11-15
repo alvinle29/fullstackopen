@@ -3,6 +3,7 @@ const userRouter = require('express').Router()
 
 const User = require('../models/user')
 
+//CREATE USERS
 userRouter.post('/', async (request, response) => {
   const { username, name, password } = request.body
 
@@ -39,6 +40,7 @@ userRouter.post('/', async (request, response) => {
   }
 })
 
+// GET USERS
 userRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
