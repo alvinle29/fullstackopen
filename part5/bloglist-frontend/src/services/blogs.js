@@ -12,7 +12,7 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const create = async newObject => {
+const create = async (newObject) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -21,7 +21,7 @@ const create = async newObject => {
   return response.data
 }
 
-const like = async blog => {
+const like = async (blog) => {
   const config = {
     headers: { Authorization: token }
   }
@@ -34,7 +34,7 @@ const like = async blog => {
   return response.data
 }
 
-const deleteBlog = async blog => {
+const deleteBlog = async (blog) => {
   const config = {
     headers: { Authorization: token }
   }
